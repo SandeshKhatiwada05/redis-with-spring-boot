@@ -1,4 +1,4 @@
-package com.redis.springredis.config;
+package com.redis.springredis.redisatprimarydatabase.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

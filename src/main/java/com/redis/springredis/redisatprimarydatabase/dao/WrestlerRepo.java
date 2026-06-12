@@ -1,6 +1,6 @@
-package com.redis.springredis.dao;
+package com.redis.springredis.redisatprimarydatabase.dao;
 
-import com.redis.springredis.entity.Wrestler;
+import com.redis.springredis.redisatprimarydatabase.entity.Wrestler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

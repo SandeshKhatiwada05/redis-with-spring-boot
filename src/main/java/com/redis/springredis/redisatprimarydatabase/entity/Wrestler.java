@@ -1,4 +1,4 @@
-package com.redis.springredis.entity;
+package com.redis.springredis.redisatprimarydatabase.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

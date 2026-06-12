@@ -1,7 +1,7 @@
-package com.redis.springredis.controller;
+package com.redis.springredis.redisatprimarydatabase.controller;
 
-import com.redis.springredis.dao.WrestlerRepo;
-import com.redis.springredis.entity.Wrestler;
+import com.redis.springredis.redisatprimarydatabase.dao.WrestlerRepo;
+import com.redis.springredis.redisatprimarydatabase.entity.Wrestler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wrestler")
+@RequestMapping("/wrestlerRedis")
 public class RedisController {
 
     private final WrestlerRepo wrestlerRepo;
