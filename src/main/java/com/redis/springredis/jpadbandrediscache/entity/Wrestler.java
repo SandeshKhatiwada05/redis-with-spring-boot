@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Wrestler {
-
     @Id
     @SequenceGenerator(name = "wrestler_gen", sequenceName = "wrestler_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wrestler_gen")
@@ -26,11 +25,11 @@ public class Wrestler {
     private String finisher;
 
     @Column(name = "is_active")
-    private String iSActive;
+    private boolean iSActive;
 
     public Wrestler(WrestlerDTO dto) {
         this.name = dto.getName();
         this.finisher = dto.getFinisher();
-        this.iSActive = dto.getISActive();
+        this.iSActive = dto.isISActive();
     }
 }

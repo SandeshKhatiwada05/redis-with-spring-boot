@@ -8,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WrestlerDTO {
+public class WrestlerDTO implements Serializable {
 
     @Nullable
     private Integer id;
@@ -21,11 +23,12 @@ public class WrestlerDTO {
 
     private String finisher;
 
-    private String iSActive;
+    private boolean iSActive;
 
     public WrestlerDTO(Wrestler wrestler) {
+        this.id = wrestler.getId();
         this.name = wrestler.getName();
         this.finisher = wrestler.getFinisher();
-        this.iSActive = wrestler.getISActive();
+        this.iSActive = wrestler.isISActive();
     }
 }

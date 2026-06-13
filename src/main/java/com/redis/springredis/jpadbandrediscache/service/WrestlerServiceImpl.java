@@ -29,9 +29,9 @@ public class WrestlerServiceImpl implements WrestlerService {
     public WrestlerDTO save(WrestlerDTO dto) {
         log.info("save() START: Storing information in both database and redis");
         Wrestler wrestler = new Wrestler(dto);
-        wrestlerRepository.save(wrestler);
-        log.info("Added {} to repository", dto.getName());
-        return dto;
+        Wrestler saveWrestler = wrestlerRepository.save(wrestler);
+        log.info("Added {} to repository", saveWrestler.getName());
+        return new WrestlerDTO(wrestler);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class WrestlerServiceImpl implements WrestlerService {
     }
 
     @Override
-    @Cacheable(key = "#id")
+    @Cacheable(key = "#p0")
     public WrestlerDTO getById(Integer id) {
         log.info("getById() START: Cache miss");
-        if (id == null || ObjectUtils.isEmpty(wrestlerRepository.findById(id))) {
+        if (id == null) {
             log.error("No such Wrestler in repository found");
             throw new NoValueException("No Wrestler with id " + id);
         }
@@ -65,7 +65,7 @@ public class WrestlerServiceImpl implements WrestlerService {
     @Override
     //No annotation required
     public List<WrestlerDTO> getALl() {
-        log.info("getALl() START");
+        log.info("getALl() START; Cache Miss -> DB Hit");
         List<Wrestler> wrestlerList = wrestlerRepository.findAll();
         List<WrestlerDTO> wrestlerDTOList = new ArrayList<>();
         for (Wrestler wrestler : wrestlerList) {
