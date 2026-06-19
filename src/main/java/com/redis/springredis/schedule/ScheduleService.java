@@ -16,7 +16,7 @@ public class ScheduleService {
 
     private final WrestlerService wrestlerService;
 
-    @Scheduled(initialDelay = 5000, fixedDelay = 5000) //5 seconds
+    @Scheduled(initialDelay = 5000, fixedDelay = 60000) //60 seconds
     public void informWrestlerInfo() {
         log.info("informWrestlerInfo() START");
 

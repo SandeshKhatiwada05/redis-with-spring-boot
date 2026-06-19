@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "wrestler")
+@CacheConfig(cacheNames = "wrestlerDTO")
 public class WrestlerServiceImpl implements WrestlerService {
 
     private final WrestlerRepository wrestlerRepository;
@@ -31,7 +31,7 @@ public class WrestlerServiceImpl implements WrestlerService {
         Wrestler wrestler = new Wrestler(dto);
         Wrestler saveWrestler = wrestlerRepository.save(wrestler);
         log.info("Added {} to repository", saveWrestler.getName());
-        return new WrestlerDTO(wrestler);
+        return new WrestlerDTO(saveWrestler);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class WrestlerServiceImpl implements WrestlerService {
     }
 
     @Override
-    @Cacheable(key = "#p0")
+    @Cacheable(key = "#id")
     public WrestlerDTO getById(Integer id) {
         log.info("getById() START: Cache miss");
         if (id == null) {

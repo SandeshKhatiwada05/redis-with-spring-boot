@@ -1,22 +1,20 @@
 package com.redis.springredis.jpadbandrediscache.config;
 
-import com.redis.springredis.jpadbandrediscache.dto.WrestlerDTO;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.serializer.*;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
-
-import java.time.Duration;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
 @EnableCaching
 public class RedisCacheConfig {
 
+    /* Specific only a dto approach
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
 
@@ -53,4 +51,40 @@ public class RedisCacheConfig {
                 .cacheDefaults(config)
                 .build();
     }
+     */
+
+
+    /*
+    Older approach for spring boot < 4.0.0
+
+        @Bean
+        public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+            RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
+                    .entryTtl(Duration.ofMinutes(10))
+                    .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+            return RedisCacheManager.builder(connectionFactory).cacheDefaults(defaultConfig).build();
+        }
+     */
+
+
+    //    new style for spring boot 4+
+    @Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
+
+        RedisSerializer<Object> serializer =
+                GenericJacksonJsonRedisSerializer.builder()
+                        .enableUnsafeDefaultTyping()
+                        .build();
+
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(
+                        RedisSerializationContext.SerializationPair.fromSerializer(serializer)
+                );
+
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .build();
+    }
 }
+
+
